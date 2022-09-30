@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм (простой)»
 
 * Студент: [Антон Курков](https://up.htmlacademy.ru/javascript/27/user/2241481).
-* Наставник: Николай Думчев.
+* Наставник: [Николай Думчев](https://htmlacademy.ru/profile/nikopol-fw).
 
 ---
 
