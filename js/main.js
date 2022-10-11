@@ -1,15 +1,16 @@
-function getPositiveInteger(a, b){
-  if (typeof a !== 'number' || typeof b !== 'number' || a < 0 || b < 0){
+function getRandomPositiveInteger(min, max){
+  if (typeof min !== 'number' || typeof max !== 'number' || min < 0 || max < 0){
     return NaN;
   }
 
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+  const lower = Math.ceil(Math.min(min, max));
+  const upper = Math.floor(Math.max(min, max));
   const result = (upper - lower) * Math.random() + lower;
 
   return Math.floor(result);
 }
 
-function checkMaxStringLenght(inputStr, len){
-  return inputStr.lenght <= len;
+function checkMaxStringLength(inputStr, maxLength){
+  return inputStr.length <= maxLength;
 }
+
