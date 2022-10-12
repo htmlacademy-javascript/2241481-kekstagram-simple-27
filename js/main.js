@@ -14,6 +14,8 @@ function checkMaxStringLength(inputStr, maxLength){
   return inputStr.length <= maxLength;
 }
 
+checkMaxStringLength('Test string!', 5);
+
 const MAX_POST_COUNT = 25;
 const MAX_LIKE_COUNT = 200;
 const MIN_LIKE_COUNT = 15;
@@ -84,4 +86,4 @@ const generatePosts = () =>{
   return posts;
 };
 
-console.log(generatePosts());
+generatePosts();
