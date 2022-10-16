@@ -48,7 +48,7 @@ const getRandomArrayItem = (array) =>
   array[getRandomPositiveInteger(0, array.length - 1)];
 
 const generateUserName = () =>
-  `${getRandomArrayItem(FIRST_NAME) } ${getRandomArrayItem(LAST_NAME)}`;
+  `${getRandomArrayItem(FIRST_NAME)} ${getRandomArrayItem(LAST_NAME)}`;
 
 const createMessage = () =>
   Array.from({length: getRandomPositiveInteger(1, 3)}, () => getRandomArrayItem(COMMENTS)).join(' ');
