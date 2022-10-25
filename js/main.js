@@ -1,5 +1,5 @@
 import {generatePosts} from './data.js';
+import {createThumbnailsLayout} from './layout.js';
 
-const sampleData = generatePosts();
-
-sampleData.length();
+const posts = generatePosts();
+createThumbnailsLayout(posts);
