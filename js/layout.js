@@ -1,9 +1,9 @@
-const createThumbnailsLayout = (pictures) => {
-  const picturesContainer = document.querySelector('.pictures');
-  const pictureTemplate = document.querySelector('#picture')
-    .content
-    .querySelector('a');
+const picturesContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture')
+  .content
+  .querySelector('.picture');
 
+const createThumbnailsLayout = (pictures) => {
   const fragment = document.createDocumentFragment();
 
   for(const pic of pictures){
