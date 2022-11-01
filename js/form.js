@@ -3,28 +3,28 @@ const editImageForm = document.querySelector('.img-upload__overlay');
 const imgUploader = document.querySelector('#upload-file');
 const closeImgEditBtn = document.querySelector('#upload-cancel');
 
-const hideEditImageForm = () =>{
+const closeImgButtonHandler = (cbKeyDown) =>{
   body.classList.remove('modal-open');
   editImageForm.classList.add('hidden');
   imgUploader.value = '';
-  document.removeEventListener('keydown', keyDownHandler);
+  document.removeEventListener('keydown', cbKeyDown);
 };
 
 const keyDownHandler = (evt) =>{
   if (evt.key === 'Escape'){
-    hideEditImageForm();
+    closeImgButtonHandler(keyDownHandler);
   }
 };
 
-const showEditImageForm = () =>{
+const imgUploaderChangedHandler = (cbKeyDown) =>{
   body.classList.add('modal-open');
   editImageForm.classList.remove('hidden');
-  document.addEventListener('keydown', keyDownHandler);
+  document.addEventListener('keydown', cbKeyDown);
 };
 
 const initImageForm = () =>{
-  imgUploader.addEventListener('change', showEditImageForm);
-  closeImgEditBtn.addEventListener('click', hideEditImageForm);
+  imgUploader.addEventListener('change', () => imgUploaderChangedHandler(keyDownHandler));
+  closeImgEditBtn.addEventListener('click', () => closeImgButtonHandler(keyDownHandler));
 };
 
 export {initImageForm};
