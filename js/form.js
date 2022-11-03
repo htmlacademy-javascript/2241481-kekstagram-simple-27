@@ -1,4 +1,5 @@
 import {scaleImage} from './scale.js';
+import {applyEffect} from './effects.js';
 
 const body = document.body;
 const editImageForm = document.querySelector('.img-upload__overlay');
@@ -22,7 +23,10 @@ const imgUploaderChangedHandler = (cbKeyDown) =>{
   body.classList.add('modal-open');
   editImageForm.classList.remove('hidden');
   document.addEventListener('keydown', cbKeyDown);
+  // set default scale - 100%
   scaleImage();
+  // set default effect - none
+  applyEffect();
 };
 
 const initImageForm = () =>{
