@@ -1,3 +1,5 @@
+import {scaleImage} from './scale.js';
+
 const body = document.body;
 const editImageForm = document.querySelector('.img-upload__overlay');
 const imgUploader = document.querySelector('#upload-file');
@@ -20,6 +22,7 @@ const imgUploaderChangedHandler = (cbKeyDown) =>{
   body.classList.add('modal-open');
   editImageForm.classList.remove('hidden');
   document.addEventListener('keydown', cbKeyDown);
+  scaleImage();
 };
 
 const initImageForm = () =>{
