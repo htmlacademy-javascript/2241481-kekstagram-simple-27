@@ -79,6 +79,8 @@ const resetSlider = (effectName = DEFAULT_EFFECT_NAME) => {
 
 const applyEffect = (effect) => {
   imagePreview.removeAttribute('class');
+  imagePreview.style.filter = '';
+
   if (effect === 'undefined'){
     imagePreview.classList.add('effects__preview--none');
   } else {
