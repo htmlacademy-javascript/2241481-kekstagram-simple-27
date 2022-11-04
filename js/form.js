@@ -1,5 +1,5 @@
 import {scaleImage} from './scale.js';
-import {applyEffect} from './effects.js';
+import {applyEffect, resetSlider} from './effects.js';
 
 const body = document.body;
 const editImageForm = document.querySelector('.img-upload__overlay');
@@ -27,6 +27,7 @@ const imgUploaderChangedHandler = (cbKeyDown) =>{
   scaleImage();
   // set default effect - none
   applyEffect();
+  resetSlider();
 };
 
 const initImageForm = () =>{
