@@ -1,6 +1,7 @@
 const imagePreview = document.querySelector('.img-upload__preview img');
 const effectItemsContainer = document.querySelector('.effects__list');
 const sliderElement = document.querySelector('.effect-level__slider');
+const effectLevel = document.querySelector('.effect-level__value');
 
 let currentEffect;
 const EffectClassName = {
@@ -108,6 +109,7 @@ const updateSliderHandler = () => {
   const effect = EFFECTS_MAP[currentEffect];
   const value = sliderElement.noUiSlider.get();
   imagePreview.style.filter = `${effect.style}(${value}${effect.units})`;
+  effectLevel.value = value;
 };
 
 const initEffects = () => {
