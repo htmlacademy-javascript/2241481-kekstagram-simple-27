@@ -1,7 +1,7 @@
 import {scaleImage} from './scale.js';
 import {applyEffect, resetSlider} from './effects.js';
 import {sendData} from './network.js';
-import {showAlert} from './util.js';
+import {showMessage, MessageType} from './util.js';
 
 
 const body = document.body;
@@ -10,6 +10,7 @@ const editImageForm = form.querySelector('.img-upload__overlay');
 const submitButton = document.querySelector('.img-upload__submit');
 const imgUploader = document.querySelector('#upload-file');
 const closeImgEditBtn = document.querySelector('#upload-cancel');
+const comment = document.querySelector('.text__description');
 
 const closeModalWindow = (cbKeyDown) =>{
   body.classList.remove('modal-open');
@@ -44,6 +45,10 @@ const enableSubmitButton = () => {
   submitButton.textContent = 'ОПУБЛИКОВАТЬ';
 };
 
+const resetFieldsValues = () => {
+  comment.value = '';
+};
+
 const setImgFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -54,10 +59,12 @@ const setImgFormSubmit = (onSuccess) => {
       () => {
         enableSubmitButton();
         onSuccess();
+        resetFieldsValues();
+        showMessage('Данные отправлены на сервер.', MessageType.CONFIRM);
       },
       () => {
         enableSubmitButton();
-        showAlert('Не удалось отправить данные. Пожалуйста, попробуйте ещё раз.');
+        showMessage('Не удалось отправить данные. Пожалуйста, попробуйте ещё раз.', MessageType.FAILED);
       },
       formData
     );

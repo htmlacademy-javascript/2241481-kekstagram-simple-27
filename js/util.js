@@ -16,8 +16,13 @@ const getRandomArrayItem = (array) =>
 const checkMaxStringLength = (inputStr, maxLength) =>
   inputStr.length <= maxLength;
 
-const ALERT_SHOW_TIME = 5000;
-const showAlert = (message) => {
+const MessageType = {
+  CONFIRM: 'green',
+  FAILED: 'red',
+};
+
+const MESSAGE_SHOW_TIME = 3000;
+const showMessage = (message, messageType) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'absolute';
@@ -27,7 +32,7 @@ const showAlert = (message) => {
   alertContainer.style.padding = '10px 3px';
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
+  alertContainer.style.backgroundColor = messageType;
 
   alertContainer.textContent = message;
 
@@ -35,8 +40,8 @@ const showAlert = (message) => {
 
   setTimeout(() => {
     alertContainer.remove();
-  }, ALERT_SHOW_TIME);
+  }, MESSAGE_SHOW_TIME);
 };
 
-export {getRandomPositiveInteger, checkMaxStringLength, getRandomArrayItem, showAlert};
+export {getRandomPositiveInteger, checkMaxStringLength, getRandomArrayItem, showMessage, MessageType};
 
