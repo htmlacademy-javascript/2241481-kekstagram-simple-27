@@ -1,17 +1,22 @@
-import {createThumbnailsLayout} from './layout.js';
+const DOWNLOAD_URL = 'https://27.javascript.pages.academy/kekstagram-simple/data';
+const UPLOAD_URL = 'https://27.javascript.pages.academy/kekstagram-simple';
 
-const downloadUrl = 'https://27.javascript.pages.academy/kekstagram-simple/data';
-const uploadUrl = 'https://27.javascript.pages.academy/kekstagram-simple';
-
-const getData = () => {
-  fetch(downloadUrl)
-    .then((response) => response.json())
-    .then((posts) => createThumbnailsLayout(posts));
+const getData = (onSuccess, onError) => {
+  fetch(DOWNLOAD_URL)
+    .then((response) => {
+      if (!response.ok){
+        onError();
+      }
+      return response.json();
+    })
+    .then((posts) => {
+      onSuccess(posts);
+    });
 };
 
 const sendData = (onSucces, onFail, body) => {
   fetch(
-    uploadUrl,
+    UPLOAD_URL,
     {
       method: 'POST',
       body: body,

@@ -91,8 +91,7 @@ const applyEffect = (effect) => {
 const effectChangeHandler = (evt) => {
   if (evt.target.classList.contains('effects__radio')){
     const classList = evt.target.parentNode
-      .querySelector('LABEL')
-      .querySelector('SPAN').className.split(' ');
+      .querySelector('.effects__preview').className.split(' ');
 
     currentEffect = classList[classList.length - 1];
     applyEffect(currentEffect);
@@ -105,7 +104,7 @@ const updateSliderHandler = () => {
     currentEffect = DEFAULT_EFFECT_NAME;
     return;
   }
-  //debugger;
+
   const effect = EFFECTS_MAP[currentEffect];
   const value = sliderElement.noUiSlider.get();
   imagePreview.style.filter = `${effect.style}(${value}${effect.units})`;
