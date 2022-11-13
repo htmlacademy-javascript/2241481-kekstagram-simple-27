@@ -1,12 +1,16 @@
 import {scaleImage} from './scale.js';
 import {applyEffect, resetSlider} from './effects.js';
+import {sendData} from './network.js';
+import {showSuccessMessage, showErrorMessage} from './message.js';
 
 const body = document.body;
-const editImageForm = document.querySelector('.img-upload__overlay');
+const form = document.querySelector('.img-upload__form');
+const editImageForm = form.querySelector('.img-upload__overlay');
+const submitButton = document.querySelector('.img-upload__submit');
 const imgUploader = document.querySelector('#upload-file');
 const closeImgEditBtn = document.querySelector('#upload-cancel');
 
-const closeImgButtonHandler = (cbKeyDown) =>{
+const closeModalWindow = (cbKeyDown) =>{
   body.classList.remove('modal-open');
   editImageForm.classList.add('hidden');
   imgUploader.value = '';
@@ -15,11 +19,11 @@ const closeImgButtonHandler = (cbKeyDown) =>{
 
 const keyDownHandler = (evt) =>{
   if (evt.key === 'Escape'){
-    closeImgButtonHandler(keyDownHandler);
+    closeModalWindow(keyDownHandler);
   }
 };
 
-const imgUploaderChangedHandler = (cbKeyDown) =>{
+const showModalWindow = (cbKeyDown) =>{
   body.classList.add('modal-open');
   editImageForm.classList.remove('hidden');
   document.addEventListener('keydown', cbKeyDown);
@@ -30,9 +34,45 @@ const imgUploaderChangedHandler = (cbKeyDown) =>{
   resetSlider();
 };
 
+const disableSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'ПУБЛИКУЮ...';
+};
+const enableSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'ОПУБЛИКОВАТЬ';
+};
+
+const resetFieldsValues = () => {
+  form.reset();
+};
+
+const setImgFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    disableSubmitButton();
+    const formData = new FormData(evt.target);
+    sendData(
+      () => {
+        enableSubmitButton();
+        onSuccess();
+        showSuccessMessage();
+        resetFieldsValues();
+      },
+      () => {
+        enableSubmitButton();
+        showErrorMessage();
+      },
+      formData
+    );
+  });
+};
+
 const initImageForm = () =>{
-  imgUploader.addEventListener('change', () => imgUploaderChangedHandler(keyDownHandler));
-  closeImgEditBtn.addEventListener('click', () => closeImgButtonHandler(keyDownHandler));
+  imgUploader.addEventListener('change', () => showModalWindow(keyDownHandler));
+  closeImgEditBtn.addEventListener('click', () => closeModalWindow(keyDownHandler));
+  setImgFormSubmit(() => closeModalWindow(keyDownHandler));
 };
 
 export {initImageForm};

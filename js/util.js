@@ -16,4 +16,9 @@ const getRandomArrayItem = (array) =>
 const checkMaxStringLength = (inputStr, maxLength) =>
   inputStr.length <= maxLength;
 
-export {getRandomPositiveInteger, checkMaxStringLength, getRandomArrayItem};
+export {
+  getRandomPositiveInteger,
+  checkMaxStringLength,
+  getRandomArrayItem,
+};
+
