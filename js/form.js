@@ -10,16 +10,25 @@ const submitButton = document.querySelector('.img-upload__submit');
 const imgUploader = document.querySelector('#upload-file');
 const closeImgEditBtn = document.querySelector('#upload-cancel');
 
+const resetFieldsValues = () => {
+  form.reset();
+};
+
 const closeModalWindow = (cbKeyDown) =>{
   body.classList.remove('modal-open');
   editImageForm.classList.add('hidden');
   imgUploader.value = '';
   document.removeEventListener('keydown', cbKeyDown);
+  resetFieldsValues();
 };
 
 const keyDownHandler = (evt) =>{
   if (evt.key === 'Escape'){
-    closeModalWindow(keyDownHandler);
+    const errorElement = document.querySelector('.error');
+    // It should close only error message, but not modal window.
+    if (!errorElement){
+      closeModalWindow(keyDownHandler);
+    }
   }
 };
 
@@ -43,36 +52,30 @@ const enableSubmitButton = () => {
   submitButton.textContent = 'ОПУБЛИКОВАТЬ';
 };
 
-const resetFieldsValues = () => {
-  form.reset();
-};
+const formSubmitHandler = (evt) => {
+  evt.preventDefault();
 
-const setImgFormSubmit = (onSuccess) => {
-  form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-
-    disableSubmitButton();
-    const formData = new FormData(evt.target);
-    sendData(
-      () => {
-        enableSubmitButton();
-        onSuccess();
-        showSuccessMessage();
-        resetFieldsValues();
-      },
-      () => {
-        enableSubmitButton();
-        showErrorMessage();
-      },
-      formData
-    );
-  });
+  disableSubmitButton();
+  const formData = new FormData(evt.target);
+  sendData(
+    () => {
+      enableSubmitButton();
+      closeModalWindow(keyDownHandler);
+      showSuccessMessage();
+      resetFieldsValues();
+    },
+    () => {
+      enableSubmitButton();
+      showErrorMessage();
+    },
+    formData
+  );
 };
 
 const initImageForm = () =>{
   imgUploader.addEventListener('change', () => showModalWindow(keyDownHandler));
   closeImgEditBtn.addEventListener('click', () => closeModalWindow(keyDownHandler));
-  setImgFormSubmit(() => closeModalWindow(keyDownHandler));
+  form.addEventListener('submit', formSubmitHandler);
 };
 
 export {initImageForm};
