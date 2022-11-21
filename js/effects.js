@@ -1,7 +1,8 @@
 const imagePreview = document.querySelector('.img-upload__preview img');
 const effectItemsContainer = document.querySelector('.effects__list');
 const sliderElement = document.querySelector('.effect-level__slider');
-const effectLevel = document.querySelector('.effect-level__value');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const effectLevel = document.querySelector('.effect-level');
 
 let currentEffect;
 const EffectClassName = {
@@ -14,7 +15,7 @@ const EffectClassName = {
 };
 
 const DEFAULT_EFFECT_NAME = EffectClassName.NONE;
-const EFFECTS_MAP = {
+const effectsMap = {
   [EffectClassName.NONE]: {
     min: 0,
     max: 0,
@@ -61,12 +62,12 @@ const EFFECTS_MAP = {
 
 const resetSlider = (effectName = DEFAULT_EFFECT_NAME) => {
   if (effectName === DEFAULT_EFFECT_NAME){
-    sliderElement.classList.add('hidden');
+    effectLevel.classList.add('hidden');
     return;
   }
 
-  const effect = EFFECTS_MAP[effectName];
-  sliderElement.classList.remove('hidden');
+  const effect = effectsMap[effectName];
+  effectLevel.classList.remove('hidden');
   sliderElement.noUiSlider.updateOptions({
     range:{
       min: effect.min,
@@ -89,14 +90,9 @@ const applyEffect = (effect) => {
 };
 
 const effectChangeHandler = (evt) => {
-  if (evt.target.classList.contains('effects__radio')){
-    const classList = evt.target.parentNode
-      .querySelector('.effects__preview').className.split(' ');
-
-    currentEffect = classList[classList.length - 1];
-    applyEffect(currentEffect);
-    resetSlider(currentEffect);
-  }
+  currentEffect = `effects__preview--${evt.target.value}`;
+  applyEffect(currentEffect);
+  resetSlider(currentEffect);
 };
 
 const updateSliderHandler = () => {
@@ -105,10 +101,10 @@ const updateSliderHandler = () => {
     return;
   }
 
-  const effect = EFFECTS_MAP[currentEffect];
+  const effect = effectsMap[currentEffect];
   const value = sliderElement.noUiSlider.get();
   imagePreview.style.filter = `${effect.style}(${value}${effect.units})`;
-  effectLevel.value = value;
+  effectLevelValue.value = value;
 };
 
 const initEffects = () => {
